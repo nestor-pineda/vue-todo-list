@@ -1,12 +1,10 @@
 <template>
   <div class="box" :class="{ green: project.complete }">
-    <!--  if project.complete is true, green class will apply -->
-    <!-- <router-link :to="{ name: 'projectDetail', param: { id: project.id } }"></router-link> -->
-
     <div class="box-title">
       <h3 @click="seeDetails = !seeDetails">{{ project.title }}</h3>
       <div class="icons">
-        <span class="material-symbols-outlined"> edit </span>
+        <router-link :to="{ name: 'editProject', params: { id: project.id } }"> <span class="material-symbols-outlined"> edit </span></router-link>
+
         <span @click="deleteProject" class="material-symbols-outlined"> delete </span>
         <span @click="toggleComplete" class="material-symbols-outlined" :class="{ greenIcon: project.complete }"> done </span>
       </div>

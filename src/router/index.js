@@ -1,7 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import ProjectDetail from "../views/ProjectDetail.vue";
+import AddProject from "../views/AddProject.vue";
+import EditProject from "../views/EditProject.vue";
 
 Vue.use(VueRouter);
 
@@ -12,9 +13,15 @@ const routes = [
     component: HomeView,
   },
   {
-    path: "/project/:id",
-    name: "projectDetail",
-    component: ProjectDetail,
+    path: "/create",
+    name: "create",
+    component: AddProject,
+  },
+  {
+    path: "/edit-project/:id",
+    name: "editProject",
+    component: EditProject,
+    props: true, // allow us to acces to the url parameter in EditProject.vue
   },
 ];
 

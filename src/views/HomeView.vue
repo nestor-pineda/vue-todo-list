@@ -1,26 +1,30 @@
 <template>
   <div class="home">
     <h1>home</h1>
+    <FilterNav @filterChange="current = $event" :current="current" />
     <div v-if="projects.length">
-      <div v-for="item in projects" :key="item.id">
+      <div v-for="item in filteredItems" :key="item.id">
         <SingleProject :project="item" @deleteItem="handleDelete" @completeItem="handleComplete" />
       </div>
     </div>
     <div v-else>
       <p>Loading projects...</p>
     </div>
+    <p>{{ current }}</p>
   </div>
 </template>
 
 <script>
 import SingleProject from "../components/SingleProject.vue";
+import FilterNav from "../components/FilterNav.vue";
 
 export default {
   name: "HomeView",
-  components: { SingleProject },
+  components: { SingleProject, FilterNav },
   data() {
     return {
       projects: [], // here we store the fetched data
+      current: "all",
     };
   },
   mounted() {
@@ -44,6 +48,17 @@ export default {
         return item.id === id;
       });
       project.complete = !project.complete;
+    },
+  },
+  computed: {
+    filteredItems() {
+      if (this.current === "ongoing") {
+        return this.projects.filter((item) => !item.complete);
+      } else if (this.current === "completed") {
+        return this.projects.filter((item) => item.complete);
+      } else {
+        return this.projects;
+      }
     },
   },
 };
